@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <!-- 引入 echarts.js -->
+    <script src="echarts.js"></script>
+    <script src="world.js"></script>
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main" style="width: 1000px;height:800px"></div>
+<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+            //初始化各省份的数据
+        var allData = [{
+            name: 'China', value: 100
+        }, {
+            name: 'India', value: 10
+        }];
+name='world'
+//色带选择
+                var levelcolor = ['#edfbfb', '#b7d6f3', '#40a9ed', '#3598c1', '#215096' ];
+                switch (1) {
+                    case 1:
+                        levelcolor = ['#edfbfb', '#b7d6f3', '#40a9ed', '#3598c1', '#215096' ];
+                    break;
+                    case 2:
+                        levelcolor = ['#E9FFEB','#B2FFB9','#6AFF70','#41FF4A','#06FF0B'];
+                    break;
+                    case 3:
+                        levelcolor = ['#FFDCDF','#FF969C','#FF6D71','#FF393B','#FB0606'];
+                    break;
+                    case 4:
+                        levelcolor = ['#FCFFD3','#FFFC97','#FFFF5D','#FFFA33','#FEFF03'];
+                        break;
+                    case 5:
+                        levelcolor = ['#FFD2F9','#FFB5FE','#FF79FD','#FF4CFD','#FF07FE'];
+                        break;
+                    default:
+                        levelcolor = ['#edfbfb', '#b7d6f3', '#40a9ed', '#3598c1', '#215096' ];
+                }
+                if (allData) {
+                    console.log(allData)
+shezhi={
+'标题':'123',
+"图例":'133',
+"图例最小值":0,
+"图例最大值":231,
+"分级数":2,
+"轮廓粗细":1,
+"轮廓颜色":'#edfbfb',           // 轮廓的粗细
+"标亮颜色":'#edfbfb',
+}
+                                            option = {
+                                        title:   {
+                                            show: true,
+                                            text: shezhi["标题"],
+                                            textStyle: {
+                                                color: '#333',   // 标题颜色
+                                                fontSize: 28
+                                            },
+                                            left: '45%',
+                                            top: 25
+
+                                         },
+                                        backgroundColor: shezhi["背景颜色"],//,'#333'
+
+                                         // visualMap 是左下角的渐进色度条
+                                        visualMap: {
+                                            type: 'piecewise',   // continuous 为连续的； piecewise为分段的
+                                            text: [shezhi["图例"], ''],   // 数据条两端的文本（上文本用来表示图例）
+                                            showLabel: true,
+                                            left: '30%',  // 色度条距离左边的距离
+                                            bottom: '10%',
+                                            min: shezhi["图例最小值"],
+                                            max: shezhi["图例最大值"],
+                                            //selectedMode: "single",
+                                            inRange: {
+                                                color: levelcolor,   // 主图显示的颜色
+
+                                            },
+                                            splitNumber: shezhi["分级数"]
+
+                                        },
+                                        series: [{
+                                            name: 'MAP',
+                                            type: 'map',
+                                            // roam: true,
+                                            mapType: name,
+                                            data: allData,
+                                            selectedMode: 'false',//是否允许选中多个区域
+                                            left: '30%',
+
+                                            label: {
+
+                                                normal: {
+                                                    show: true,
+                                                    formatter:function(val){
+                                                        console.log(val,9999999999);
+                                                        var area_content =  '{a|' + val.name + '}' + '-' + '{b|' + val.value + '}';
+                                                        return area_content.split("-").join("\n");
+                                                    },//让series 中的文字进行换行
+                                                  rich: {
+                                                      a: {
+                                                          //color: shezhi["标签颜色"],  //  显示省名的属性
+                                                          fontSize: 10
+                                                      },
+                                                      b: {                 //  显示值的属性
+                                                         // color: shezhi["标签颜色"],
+                                                          fontFamily: 'Microsoft YaHei',
+                                                          fontSize: 10,
+                                                          width: 16,
+                                                          height: 16,
+                                                          borderRadius: 10,
+                                                         // borderWidth: shezhi["值文本框"],    // 值外面的圆框宽度，0就没有了
+                                                          borderColor: '#f00',
+                                                          textAlign: 'center',
+                                                          padding: Math.round(shezhi["标签大小"]*0.35-3)
+                                                      }
+                                                  }//富文本样式,就是上面的formatter中'{a|'和'{b|'
+                                                },
+                                                emphasis: {
+                                                    show: true,
+                                                    areaColor:'#f00',
+                                                    itemStyle: {borderColor: '#f00',
+                                                                   borderWith: 2,}
+                                                }
+                                            },//地图中文字内容及样式控制
+                                            roam: true,
+                                            itemStyle:{
+                                                normal:{
+                                                    borderColor: shezhi["轮廓粗细"],     // 地图斑块的轮廓颜色
+                                                    borderWith: shezhi["轮廓颜色"],           // 轮廓的粗细
+                                                },
+                                                emphasis:{
+                                                    areaColor: shezhi["标亮颜色"]     //区域选中标亮的颜色
+                                                }
+                                            }
+
+
+
+                                        }],
+                                             toolbox: {
+                            show: true,
+                            feature: {
+                                restore: {},
+                                saveAsImage: {}
+                            },
+                            itemSize:30,
+                            iconStyle:
+                            {
+                                borderColor : '#999',
+                                borderWidth: 3
+                            }
+                        }
+                    };
+                     console.log(option)
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+                } else {
+                    alert('无法加载该地图');
+                }
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
